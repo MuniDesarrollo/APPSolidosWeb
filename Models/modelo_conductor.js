@@ -136,11 +136,8 @@ conductorModel.deleteConductor=function(idTconductor,callback)
 	 			 			 else
 
 	 			 			 {
-	 			 			 	sql=null;
-	 			 			 	sqlExists=null;
-	 			 			 	delete sql;
-	 			 			 	delete sqlExists;
-	 			 			 	callback(null,{"msg";"notExist"});
+	 			 			 	
+	 			 			 	callback(null,{"msg":"notExist"});
 	 			 			 }
 	 			 		});
 	 			 }

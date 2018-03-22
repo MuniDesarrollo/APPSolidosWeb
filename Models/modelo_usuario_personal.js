@@ -38,16 +38,35 @@ if (connection)
 		});
 }
 }
+//obtenemos un usuario por su id
+usuarioPersonalModel.getUsuarioPersonal = function(id,callback)
+{
+	if (connection) 
+	{
+		var sql = 'SELECT * FROM tpersonal WHERE idTpersonal = ' + connection.escape(id);
+		connection.query(sql, function(error, row) 
+		{
+			if(error)
+			{
+				throw error;
+			}
+			else
+			{
+				callback(null, row);
+			}
+		});
+	}
+}
 
-//validamos el acceso al sistema 
 
+//validamos el acceso al sistema inisiar sesion.........
 usuarioPersonalModel.validarUsuarioPersonal=function(usuarioPersonalData,callback)
 {
 	//validamos la conexion a la base de datos
 	if (connection)
 	 {
-	 	var sql='SELECT * FROM tpersonal WHERE usuario='+connection.escape(usuarioPersonalData.usuario)+'AND'+
-	 	'contrasenia='+connection.escape(usuarioPersonalData.contrasenia)
+	 	var sql='SELECT * FROM tpersonal WHERE usuario='+connection.escape(usuarioPersonalData.usuario)+' AND '+
+	 	'contrasnia= '+connection.escape(usuarioPersonalData.contrasenia)
 
 	 	connection.query(sql,function(error,row)
 	 		{
@@ -62,3 +81,6 @@ usuarioPersonalModel.validarUsuarioPersonal=function(usuarioPersonalData,callbac
 	 		});
 	 }
 }
+
+//exportamos todas las funciones de nuestro modelo--
+module.exports.usuarioPersonal=usuarioPersonalModel;

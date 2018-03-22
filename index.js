@@ -90,7 +90,7 @@ app.set('view engine', 'html');
 // ruta pagina inicial (login)
 app.get("/",function(req,res){
  
- res.render("Principal.html"); 
+ res.render("index.html"); 
 });
 
 
@@ -203,15 +203,10 @@ server.listen(port,function(){
 	console.log("servidor HTTP funcionando puerto 8081");
 
 });
-//conectando con myjava.........
-app.post("/sesion",function(req,res){
-//obtiene los datos de los txts.. de  inicio.html
-  var loginData={
-    usuario:req.body.txtUsuario,
-    contrasenia:req.body.txtContrasenia,
-  };
+//agregamos la rutas de nuestro carpeta Route
+// rutas
+var route_usuario=require("./Routes/route_usuario_login");
+app.use(route_usuario);
 
-
-
-});
-  
+var route_conductor1=require("./Routes/route_conductor");
+app.use(route_conductor1);

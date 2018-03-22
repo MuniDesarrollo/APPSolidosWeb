@@ -3,35 +3,25 @@
 This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
 -->
-<?php
-session_start();
-error_reporting(E_ALL ^ E_NOTICE);
-if (!$_SESSION["autentificado"]) {
-    header("Location: index.php?error=si");
-}
-if(!class_exists('ctrabajador'))
-{
-    include("../clases/ctrabajador.php");
-}
-?>
+
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Starter</title>
+  <title>APPSolidos | ADMIN</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../Public/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../Public/bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="../bower_components/Ionicons/css/ionicons.min.css">
+  <link rel="stylesheet" href="../Public/bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme style -->
-  <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="../Public/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
-  <link rel="stylesheet" href="../dist/css/skins/skin-blue.min.css">
+  <link rel="stylesheet" href="../Public/dist/css/skins/skin-blue.min.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -75,7 +65,7 @@ desired effect
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>LT</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
+      <span class="logo-lg"><b>APP</b>RSOLIDOS</span>
     </a>
 
     <!-- Header Navbar -->
@@ -249,7 +239,7 @@ desired effect
         </div>
         
         <div class="pull-left info">
-          <p>Alexander Pierce</p>
+          <p>Carlin Acosta</p>
           <!-- Status -->
           <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
         </div>
@@ -265,10 +255,53 @@ desired effect
             </span>
         </div>
       </form>
+
       <!-- /.search form -->
 
       <!-- Sidebar Menu -->
-      <?php require_once 'layout/Privilegios.php'; ?>
+     <!-- Sidebar Menu -->
+      <ul class="sidebar-menu" data-widget="tree">
+        <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>MANTENIMIENTO</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="/usuarios">Conductor</a></li>
+            <li><a href="#">Personal</a></li>
+            <li><a href="#">Camión Recolector</a></li>
+          </ul>
+        </li>
+
+         <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>PROCESOS</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="/Conductor">Monitoreo</a></li>
+            <li><a href="#">Detalle Reporte</a></li>
+            <li><a href="#">Detalle Camion</a></li>
+          </ul>
+        </li>
+
+         <li class="treeview">
+          <a href="#"><i class="fa fa-link"></i> <span>REPORTES</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            
+            <li><a href="#">Recoleccion Por Camion</a></li>
+            <li><a href="#">Recolección Por Mes</a></li>
+            <li><a href="#">Recoleccion Anual</a></li>
+            
+          </ul>
+        </li>
+      </ul>
       <!-- /.sidebar-menu -->
     </section>
     <!-- /.sidebar -->
@@ -308,52 +341,6 @@ desired effect
                                 <div id="DatosUsuario">
                                     
                                 </div> 
-                                <button class="btn btn-primary"  data-toggle="modal" onClick="nuevoTrabajador()" ><i class="fa fa-plus-circle fa-fw"></i> Nuevo</button>
-                                <div class="table-responsive">
-                                         <div class="dataTable_wrapper">
-                                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Nro</th>
-                                                        <th>Nombres</th>
-                                                        <th>DNI</th>
-                                                        <th>Telefono</th>
-                                                        <th>Direccion</th>
-                                                        <th>Cargo</th>
-                                                        <th>Acceso</th>
-                                                        <th>Operaciones</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                <?php
-                                                    $oTrabajador=new ctrabajador('','','','','','','','','');
-                                                    
-                                                    $nro=0;
-                                                    foreach ($oTrabajador->MostrarTrabajadores() as $fila) {
-                                                        $nro=$nro+1;
-                                                          print_r("<tr>
-                                                                <td>".$nro."</td>
-                                                                <td>".$fila['Nombre_trabajador']."</td>
-                                                                <td>".$fila['DNI_trabajador']."</td>
-                                                                <td>".$fila['Telefono']."</td>
-                                                                <td>".$fila['Direccion']."</td>
-                                                                <td>".$fila['Tipo_trabajador']."</td>");
-                                                                if($fila['Estado']=='0'){
-                                                                    print_r("<td class='center'><button class='btn btn-danger'  onClick=\"CambiarEstadoUsuario('".base64_encode($fila['Cod_trabajador'])."','".base64_encode($fila['Estado'])."')\"><i class='fa fa-power-off fa-fw'></i></button></td>");
-                                                                }
-                                                                else{
-                                                                    print_r("<td class='center'><button class='btn btn-success'  onClick=\"CambiarEstadoUsuario('".base64_encode($fila['Cod_trabajador'])."','".base64_encode($fila['Estado'])."')\"><i class='fa  fa-check fa-fw'></i></button></td>");
-                                                                }
-                                                                print_r("<td class='center'><button class='btn btn-warning' onClick=\"ModificarUsuario('".base64_encode($fila['Cod_trabajador'])."')\"><i class='fa fa-pencil fa-fw'></i></button> ");
-                                                                print_r("<button class='btn btn-danger'   onClick=\"EliminarUsuario('".base64_encode($fila['Cod_trabajador'])."')\"><i class='fa fa-remove fa-fw'></i> </button></td>");
-                                                                print_r("</tr>");         
-                                                       
-                                                    }
-                                                ?>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
                                 
                                 
                                 
@@ -464,12 +451,12 @@ desired effect
 <!-- REQUIRED JS SCRIPTS -->
 
 <!-- jQuery 3 -->
-<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<script src="../Public/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
-<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="../Public/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
-<script src="../dist/js/adminlte.min.js"></script>
-<script src="../js/myjava.js"></script>
+<script src="../Public/dist/js/adminlte.min.js"></script>
+<script src="../Public/js/myjava.js"></script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
