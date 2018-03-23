@@ -37,6 +37,25 @@ conductorModel.getConductores=function(callback)
 	 }
 }
 
+//obtenemos un conductor por su id
+conductorModel.getConductor = function(id,callback)
+{
+	if (connection) 
+	{
+		var sql = 'SELECT * FROM tconductor WHERE idTconductor = ' + connection.escape(id);
+		connection.query(sql, function(error, row) 
+		{
+			if(error)
+			{
+				throw error;
+			}
+			else
+			{
+				callback(null, row);
+			}
+		});
+	}
+}
 //obtenemos un conductor por su DNI-------
 
 conductorModel.getConductorDNI=function(dni,callback)
@@ -57,6 +76,25 @@ conductorModel.getConductorDNI=function(dni,callback)
 					 	callback(null,row);
 					 }
 			});
+	}
+}
+//obtenemos un usuario por su nombre
+conductorModel.getConductorNombre = function(nombre,callback)
+{
+	if (connection) 
+	{
+		var sql = 'SELECT * FROM tconductor WHERE nombre = ' + connection.escape(nombre);
+		connection.query(sql, function(error, row) 
+		{
+			if(error)
+			{
+				throw error;
+			}
+			else
+			{
+				callback(null, row);
+			}
+		});
 	}
 }
 

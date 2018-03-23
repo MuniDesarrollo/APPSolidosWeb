@@ -4,7 +4,6 @@ var router=express.Router();
 var Usuario = require('../Models/modelo_usuario_personal').usuarioPersonal;
 
 
-
 //inicio de sesion
 router.post("/sesion",function(req,res){
 //obtiene los datos de los txts.. de  inicio.html
@@ -28,31 +27,11 @@ Usuario.validarUsuarioPersonal(loginData,function(err,data)
 
 router.get("/Principal2",function(req,res)
   {
-    res.render("Principal.html");
+    res.render("page/Principal.html");
    // res.render("index.html");
   });
 
-//pagina despues de iniciar sesion
-router.get("/index",function(req,res){
- console.log(req.session.user_id);
- res.render("pages/index"); 
-});
-
-
-//recupera todos los usuarios de la bd
-router.route("/usuarios")
-.get(function(req,res){
-	Usuario.getUsuarios(function(error,doc){
-       if(error){console.log("error");}
-       
-      // console.log(JSON.parse(JSON.stringify(doc)));
-       res.render("pages/usuarios",{ usuarios: JSON.parse(JSON.stringify(doc)) })
-	});
-});
-
-
-
-// nuevo usuario
+// nuevo usuario personal--
 router.route("/new_usuario")
 .get(function(req,res){
 
@@ -62,12 +41,15 @@ router.route("/new_usuario")
 .post(function(req,res){
 
    var User= {
-   	   nombre:req.body.nombre, 
-      usuario:req.body.usuario,
-	  contrasena:req.body.password
+        dni:req.body.txtdni,
+   	   nombre:req.body.txtnombre,
+       apellidos:req.body.txtapellido, 
+       telefono:req.body.txttelefono,
+      usuario:req.body.txtusuario,
+	  contrasnia:req.body.txtcontrasenia
    };
   
-	Usuario.insertUsuario(User,function(err,documento){
+	Usuario.insertUsuarioPersonal(User,function(err,documento){
 		
 			//si el usuario se ha insertado correctamente mostramos su info
 			if(documento && documento.insertId)
@@ -112,10 +94,12 @@ router.route("/usuarios/:id")
    	else
    		{
    			var User= {
-   				idUsuario:req.params.id,
-		   	    nombre:req.body.nombre, 
-		        usuario:req.body.usuario,
-			    contrasena:req.body.password
+   				idTpersonal:req.params.id,
+          nombre:req.body.txtnombre,
+          apellidos:req.body.txtapellido, 
+          telefono:req.body.txttelefono,
+          usuario:req.body.txtusuario,
+          contrasnia:req.body.txtcontrasenia
 		   };
 		   
             

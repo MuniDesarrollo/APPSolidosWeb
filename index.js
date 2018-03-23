@@ -7,6 +7,7 @@ var net = require('net');
 const http = require('http');
 
 
+var Usuario = require('./Models/modelo_usuario_personal').usuarioPersonal;
 var port=process.env.PORT || 7000;
 
 
@@ -18,11 +19,6 @@ var io=require('socket.io').listen(server);
 //tcp socket server
 
 var clients = [];//Arduinos conectados
-
-
-
-
-
 
 
 
@@ -203,10 +199,34 @@ server.listen(port,function(){
 	console.log("servidor HTTP funcionando puerto 8081");
 
 });
+
+//inicio de sesion
+app.post("/sesion",function(req,res){
+//obtiene los datos de los txts.. de  inicio.html
+  var loginData={
+    usuario:req.body.txtUsuario,
+    contrasenia:req.body.txtContrasenia,
+  };
+
+Usuario.validarUsuarioPersonal(loginData,function(err,data)
+  {
+    if (err)
+     {
+      res.send("0");
+     }else
+     {
+      res.send("1");
+     }
+  });
+
+});
 //agregamos la rutas de nuestro carpeta Route
 // rutas
 var route_usuario=require("./Routes/route_usuario_login");
-app.use(route_usuario);
+app.use("/page",route_usuario);
 
 var route_conductor1=require("./Routes/route_conductor");
-app.use(route_conductor1);
+app.use("/page",route_conductor1);
+/*
+var route_personal1=require("./Routes/route_personal");
+app.use("/page",route_personal1);*/

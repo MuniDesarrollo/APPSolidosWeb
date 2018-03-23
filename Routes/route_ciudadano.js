@@ -23,4 +23,17 @@ router.route("/ciudadano")
 
 	});
 
+//CREAMOS NUEVO CIUDADANO....
+
+router.route("/new_ciudadano")
+.get(function(req,res)
+{
+	res.render("./modal/nuevoCiudadano");
+})
+.post(function(req,res)
+	{
+		var linea={
+			//********************
+		};
+	});
 module.exports=router;
